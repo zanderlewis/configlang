@@ -1,3 +1,5 @@
+USE lib1
+
 FUNC greet
 PRINT "Hello, World!"
 ENDFUNC
@@ -11,3 +13,5 @@ PRINT "The sum of 2 and 3 is: " ++ str(abc) ++ "!"
 ENDFUNC
 
 CALL addNumbers
+
+CALL lib1.say_hello

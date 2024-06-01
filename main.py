@@ -1,5 +1,6 @@
 import configparser
 import sys
+import importlib
 
 
 def read_config(file_path):
@@ -20,6 +21,7 @@ class SimpleInterpreter:
         self.syntax = syntax
         self.functions = {}
         self.variables = {}
+        self.libraries = {}
 
     def interpret(self, code):
         in_function_definition = False
@@ -104,15 +106,13 @@ class SimpleInterpreter:
                     )
                 result = eval(expression)
                 self.variables[var_name] = result
-            elif command == self.syntax["CONCAT"]:
-                strings_to_concat = command_args[0].split("++")
-                strings_to_concat = [string.strip() for string in strings_to_concat]
-                for i, string in enumerate(strings_to_concat):
-                    if string in self.variables:
-                        strings_to_concat[i] = self.variables[string]
-                    elif string.startswith('"') and string.endswith('"'):
-                        strings_to_concat[i] = string[1:-1]
-                print("".join(strings_to_concat))
+            elif command == self.syntax["IMPORT_LIB"]:
+                lib_name = command_args[0]
+                try:
+                    self.libraries[lib_name] = importlib.import_module(lib_name)
+                except ImportError:
+                    print(f"Failed to import library: {lib_name}")
+                    sys.exit(1)
             else:
                 command_args = " ".join(command_args)
                 if command == self.syntax["FUNC_DEF"]:
@@ -126,6 +126,16 @@ class SimpleInterpreter:
                     function_name = command_args
                     if function_name in self.functions:
                         self.interpret(self.functions[function_name])
+                    elif "." in function_name:
+                        lib_name, func_name = function_name.split(".")
+                        if lib_name in self.libraries and hasattr(
+                            self.libraries[lib_name], func_name
+                        ):
+                            func = getattr(self.libraries[lib_name], func_name)
+                            func()
+                        else:
+                            print(f"Unknown function: {function_name}")
+                            sys.exit(1)
                     else:
                         print(f"Unknown function: {function_name}")
                         sys.exit(1)
