@@ -1,6 +1,7 @@
 import configparser
 import sys
 import importlib
+import argparse
 
 
 def read_config(file_path):
@@ -144,8 +145,23 @@ class SimpleInterpreter:
                     sys.exit(1)
 
 
-config = read_config("cl.config")
+config = read_config("cfgl.config")
+lang_settings = {k: v for k, v in config.items("LANG_SETTINGS")}
+parser = argparse.ArgumentParser()
+parser.add_argument("file_path", type=str, help="Path to the file to interpret")
+args = parser.parse_args()
+try:
+    with open(args.file_path, "r") as file:
+        file.read()
+except FileNotFoundError:
+    print("File not found.")
+    sys.exit(1)
+if not args.file_path.endswith(f".{lang_settings['file_extension']}"):
+    print(
+        f"Invalid file extension. Only {lang_settings['file_extension']} files are supported."
+    )
+    sys.exit(1)
 syntax = {k: v for k, v in config.items("SYNTAX")}
-code = read_code("code.cfgl")
+code = read_code(args.file_path)
 interpreter = SimpleInterpreter(syntax)
 interpreter.interpret(code)
