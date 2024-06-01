@@ -5,9 +5,9 @@ ENDFUNC
 CALL greet
 
 FUNC addNumbers
-PRINT "The sum of 2 and 3 is: "
-CALC result 2 + 3
-PRINT result
+CALC abc 2 + 3
+PRINT "The sum of 2 and 3 is: " ++ str(abc) ++ "!"
+
 ENDFUNC
 
 CALL addNumbers
