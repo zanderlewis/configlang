@@ -4,7 +4,7 @@ ConfigLang is a highly customizable programming language that allows you to crea
 
 ## Customizable
 
-So customizable...
+So customizable that you can...
 
 1. **Create Your Own Syntax**: Define your own rules and structure for your programming language. This allows you to create a language that suits your specific needs or preferences.
 
