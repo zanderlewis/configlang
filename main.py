@@ -8,6 +8,33 @@ def read_config(file_path):
     config = configparser.ConfigParser(default_section=None)
     config.optionxform = str
     config.read(file_path)
+
+    defaults = {
+        "LANG_SETTINGS": {
+            "file_extension": "cfgl",
+        },
+        "SYNTAX": {
+            "PRINT": "print",
+            "VAR_DEF": "var",
+            "VAR_ASSIGN": "set",
+            "ARITHMETIC": "calc",
+            "STR": "str",
+            "CONCAT": "++",
+            "IMPORT_LIB": "import",
+            "FUNC_DEF": "def",
+            "FUNC_END": "end",
+            "FUNC_CALL": "call",
+            "SLC": "#",
+        },
+    }
+
+    for section, section_defaults in defaults.items():
+        if section not in config:
+            config[section] = {}
+        for key, value in section_defaults.items():
+            if key not in config[section]:
+                config[section][key] = value
+
     return config
 
 
@@ -29,6 +56,8 @@ class SimpleInterpreter:
         function_name = None
         function_code = []
         for line in code:
+            if self.syntax['SLC'] in line:
+                line = line[:line.index(self.syntax['SLC'])]
             if not line.strip():
                 continue
             command, *command_args = line.split(maxsplit=1)

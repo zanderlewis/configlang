@@ -4,6 +4,8 @@ FUNC greet
 PRINT "Hello, World!"
 ENDFUNC
 
+# I am a comment!
+
 CALL greet
 
 FUNC addNumbers
