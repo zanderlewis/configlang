@@ -8,11 +8,8 @@ def read_config(file_path):
     config = configparser.ConfigParser(default_section=None)
     config.optionxform = str
     config.read(file_path)
-
     defaults = {
-        "LANG_SETTINGS": {
-            "file_extension": "cfgl",
-        },
+        "LANG_SETTINGS": {"file_extension": "cfgl"},
         "SYNTAX": {
             "PRINT": "print",
             "VAR_DEF": "var",
@@ -27,14 +24,12 @@ def read_config(file_path):
             "SLC": "#",
         },
     }
-
     for section, section_defaults in defaults.items():
         if section not in config:
             config[section] = {}
         for key, value in section_defaults.items():
             if key not in config[section]:
                 config[section][key] = value
-
     return config
 
 
@@ -56,8 +51,8 @@ class SimpleInterpreter:
         function_name = None
         function_code = []
         for line in code:
-            if self.syntax['SLC'] in line:
-                line = line[:line.index(self.syntax['SLC'])]
+            if self.syntax["SLC"] in line:
+                line = line[: line.index(self.syntax["SLC"])]
             if not line.strip():
                 continue
             command, *command_args = line.split(maxsplit=1)
@@ -127,7 +122,18 @@ class SimpleInterpreter:
                 elif var_value in self.variables:
                     self.variables[var_name] = self.variables[var_value]
                 else:
-                    self.variables[var_name] = var_value
+                    try:
+                        self.variables[var_name] = int(var_value)
+                    except ValueError:
+                        try:
+                            self.variables[var_name] = float(var_value)
+                        except ValueError:
+                            if var_value.lower() == "true":
+                                self.variables[var_name] = True
+                            elif var_value.lower() == "false":
+                                self.variables[var_name] = False
+                            else:
+                                self.variables[var_name] = var_value
             elif command == self.syntax["ARITHMETIC"]:
                 var_name, expression = " ".join(command_args).split(maxsplit=1)
                 for var_name in self.variables:
