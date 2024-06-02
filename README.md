@@ -1,4 +1,5 @@
 # ConfigLang
+[![wakatime](https://wakatime.com/badge/github/zanderlewis/configlang.svg)](https://wakatime.com/badge/github/zanderlewis/configlang)
 
 ConfigLang is a highly customizable programming language that allows you to create your own syntax and change your language's file extension with no code required using a single config file.
 
