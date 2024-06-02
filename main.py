@@ -39,7 +39,7 @@ def read_code(file_path):
         return file.read().splitlines()
 
 
-class SimpleInterpreter:
+class Interpreter:
 
     def __init__(self, syntax):
         self.syntax = syntax
@@ -230,5 +230,5 @@ if not args.file_path.endswith(f".{lang_settings['file_extension']}"):
     sys.exit(1)
 syntax = {k: v for k, v in config.items("SYNTAX")}
 code = read_code(args.file_path)
-interpreter = SimpleInterpreter(syntax)
+interpreter = Interpreter(syntax)
 interpreter.interpret(code)
