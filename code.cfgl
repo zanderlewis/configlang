@@ -1,12 +1,17 @@
 USE lib1
 
-FUNC greet
+FUNC greet name
+PRINT "Hello, " ++ name ++ "!"
+ENDFUNC
+
+FUNC greet_no_args
 PRINT "Hello, World!"
 ENDFUNC
 
 # I am a comment!
 
-CALL greet
+CALL greet "Zander"
+CALL greet_no_args
 
 FUNC addNumbers
 CALC abc 2 + 3
@@ -16,3 +21,22 @@ ENDFUNC
 CALL addNumbers
 
 CALL lib1.say_hello
+
+VAR x
+SET x "4"
+VAR y
+SET y "5"
+VAR z
+SET z "6"
+VAR q
+SET q "7"
+
+VAR a
+CALL lib1.sqr x
+SET a RESULT
+PRINT str(RESULT)
+
+VAR b
+CALL lib1.add4 x y z q
+SET b RESULT
+PRINT str(RESULT)
