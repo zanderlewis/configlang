@@ -8,7 +8,7 @@ So customizable that you can...
 
 1. **Create Your Own Syntax**: Define your own rules and structure for your programming language. This allows you to create a language that suits your specific needs or preferences.
 
-2. **Change Your Language's File Extension**: You're not stuck with a `.py` or `.js` file extension. With ConfigLang, you can define your own file extension for your custom language.
+2. **Change Your Language's File Extension**: You're not stuck with the `.cfgl` file extension. With ConfigLang, you can define your own file extension for your custom language.
 
 ... with no code!
 
