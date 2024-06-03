@@ -1,4 +1,4 @@
-name: Cleanup Python Files
+name: Run Cleanup Script and Create PR
 
 on:
   push:
@@ -25,5 +25,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install black
 
-      - name: Run cleanup.py
+      - name: Run cleanup script
         run: python cleanup.py
+
+      - name: Configure git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Create branch for changes
+        run: |
+          git checkout -b cleanup-changes
+          git add .
+          git commit -m "Run cleanup script"
+          git push origin cleanup-changes
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: cleanup-changes
+          title: "Automated Cleanup Changes"
+          body: "This PR contains changes made by the cleanup script."
