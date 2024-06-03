@@ -1,4 +1,4 @@
-USE lib1 as l
+USE lib1 AS l
 
 FUNC greet name
 PRINT "Hello, " ++ name ++ "!"
@@ -10,7 +10,7 @@ ENDFUNC
 
 # I am a comment!
 
-CALL greet "ConfigLang"
+CALL greet ConfigLang
 CALL greet_no_args
 
 FUNC addNumbers
@@ -22,21 +22,13 @@ CALL addNumbers
 
 CALL l.say_hello
 
-VAR x
-SET x "4"
-VAR y
-SET y "5"
-VAR z
-SET z "6"
-VAR q
-SET q "7"
+VAR x "4"
+VAR y "5"
+VAR z "6"
+VAR q "7"
 
-VAR a
 CALL l.sqr x
-SET a RESULT
 PRINT str(RESULT)
 
-VAR b
 CALL l.add4 x y z q
-SET b RESULT
 PRINT str(RESULT)
