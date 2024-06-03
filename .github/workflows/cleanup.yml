@@ -33,14 +33,21 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Create branch for changes
+      - name: Check for changes
+        id: check_changes
         run: |
           git checkout -b cleanup-changes
           git add .
+          echo "::set-output name=changes::$(git status --porcelain)"
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changes != ''
+        run: |
           git commit -m "Run cleanup script"
           git push origin cleanup-changes
 
       - name: Create Pull Request
+        if: steps.check_changes.outputs.changes != ''
         uses: peter-evans/create-pull-request@v5
         with:
           branch: cleanup-changes
