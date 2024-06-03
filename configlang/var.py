@@ -23,7 +23,7 @@ def interpret_var(line, syntax, variables):
         strings_to_concat = [string.strip() for string in strings_to_concat]
         for i, string in enumerate(strings_to_concat):
             if string in variables:
-                strings_to_concat[i] = variables[string]
+                strings_to_concat[i] = str(variables[string])  # Convert to string
             elif string.startswith('"') and string.endswith('"'):
                 strings_to_concat[i] = string[1:-1]
         variables[var_name] = "".join(strings_to_concat)

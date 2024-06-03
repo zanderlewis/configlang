@@ -15,20 +15,20 @@ CALL greet_no_args
 
 FUNC addNumbers
 CALC abc 2 + 3
-PRINT "The sum of 2 and 3 is: " ++ str(abc) ++ "!"
+PRINT "The sum of 2 and 3 is: " ++ abc ++ "!"
 ENDFUNC
 
 CALL addNumbers
 
 CALL l.say_hello
 
-VAR x "4"
-VAR y "5"
-VAR z "6"
-VAR q "7"
+VAR x 4
+VAR y 5
+VAR z 6
+VAR q 7
 
 CALL l.sqr x
-PRINT str(RESULT)
+PRINT RESULT
 
 CALL l.add4 x y z q
-PRINT str(RESULT)
+PRINT RESULT
