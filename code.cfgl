@@ -1,7 +1,8 @@
 USE lib1 AS l
 
-FUNC greet name
+FUNC greet[name, e]
 PRINT "Hello, " ++ name ++ "!"
+PRINT str[e]
 ENDFUNC
 
 FUNC greet_no_args
@@ -10,7 +11,7 @@ ENDFUNC
 
 # I am a comment!
 
-CALL greet ConfigLang
+CALL greet["ConfigLang", "q"]
 CALL greet_no_args
 
 FUNC addNumbers
@@ -27,8 +28,8 @@ VAR y 5
 VAR z 6
 VAR q 7
 
-CALL l.sqr x
+CALL l.sqr[x]
 PRINT RESULT
 
-CALL l.add4 x y z q
+CALL l.add4[x, y, z, q]
 PRINT RESULT
