@@ -44,6 +44,7 @@ jobs:
         if: steps.check_changes.outputs.changes != ''
         run: |
           git commit -m "Run cleanup script"
+          git pull --rebase origin cleanup-changes
           git push origin cleanup-changes
 
       - name: Create Pull Request
