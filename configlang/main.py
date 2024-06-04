@@ -26,6 +26,8 @@ def read_config(file_path):
             "FUNC_CALL": "call",
             "SLC": "#",
             "AS": "as",
+            "OPEN_PAREN": "(",
+            "CLOSE_PAREN": ")",
         },
     }
     for section, section_defaults in defaults.items():
@@ -96,8 +98,14 @@ class Interpreter:
                     ) = f.interpret_func_end(
                         line, self.syntax, self.functions, function_name, function_code
                     )
-                elif command == self.syntax["FUNC_CALL"]:
-                    function_name, *function_args = command_args
+                elif command == self.syntax["FUNC_CALL"] or line.startswith("CALL "):
+                    function_call = line.replace("CALL ", "") if line.startswith("CALL ") else line
+                    function_name = function_call.split(self.syntax['OPEN_PAREN'])[0].strip()  # Get the function name by splitting the line at the opening parenthesis and stripping any leading/trailing whitespace
+                    if self.syntax['OPEN_PAREN'] in function_call and self.syntax['CLOSE_PAREN'] in function_call:
+                        function_args_str = function_call[function_call.index(self.syntax['OPEN_PAREN'])+1:function_call.rindex(self.syntax['CLOSE_PAREN'])]  # Extract the string between parentheses
+                        function_args = [arg.strip() for arg in function_args_str.split(",")]  # Split the arguments by comma and strip spaces
+                    else:
+                        function_args = []
                     if function_name in self.functions:
                         function = self.functions[function_name]
                         function_args = [
@@ -122,7 +130,23 @@ class Interpreter:
                         ):
                             func = getattr(self.libraries[lib_name], func_name)
                             function_args = [
-                                self.variables[arg] if arg in self.variables else arg
+                                (
+                                    self.variables[arg]
+                                    if arg in self.variables
+                                    else (
+                                        arg[1:-1]
+                                        if arg.startswith('"') and arg.endswith('"')
+                                        else (
+                                            int(arg)
+                                            if arg.isdigit()
+                                            else (
+                                                float(arg)
+                                                if arg.replace(".", "", 1).isdigit()
+                                                else arg
+                                            )
+                                        )
+                                    )
+                                )
                                 for arg in function_args
                             ]
                             if function_args:
