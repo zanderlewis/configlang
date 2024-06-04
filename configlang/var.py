@@ -40,7 +40,7 @@ def interpret_var(line, syntax, variables):
             except ValueError:
                 if var_value.lower() == "true":
                     variables[var_name] = True
-                elif var_value.lower() == "false":
+                elif var_value.lower() == 'false':
                     variables[var_name] = False
                 else:
                     variables[var_name] = var_value
