@@ -36,6 +36,7 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
+          git checkout main
           git checkout -b cleanup-changes
           git add .
           echo "::set-output name=changes::$(git status --porcelain)"
@@ -52,5 +53,6 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           branch: cleanup-changes
+          base: main
           title: "Automated Cleanup Changes"
           body: "This PR contains changes made by the cleanup script."
