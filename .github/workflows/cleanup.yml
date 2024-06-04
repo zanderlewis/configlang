@@ -26,18 +26,21 @@ jobs:
           pip install black
 
       - name: Run cleanup script
-        run: python cleanup.py
+        run: python3 cleanup.py
 
       - name: Configure git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Check for changes
-        id: check_changes
+      - name: Create and switch to cleanup branch
         run: |
           git checkout main
           git checkout -b cleanup-changes
+
+      - name: Check for changes
+        id: check_changes
+        run: |
           git add .
           echo "::set-output name=changes::$(git status --porcelain)"
 
@@ -56,3 +59,4 @@ jobs:
           base: main
           title: "Automated Cleanup Changes"
           body: "This PR contains changes made by the cleanup script."
+          token: ${{ secrets.GITHUB_TOKEN }}
