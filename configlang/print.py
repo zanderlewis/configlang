@@ -6,10 +6,13 @@ def interpret_print(line, syntax, variables):
     if command_args:
         arg = command_args[0]
         if syntax["STR"] in arg:
-            str_var_name = arg[arg.index(syntax["OPEN_PAREN"]) + 1 : arg.index(syntax["CLOSE_PAREN"])]
+            str_var_name = arg[
+                arg.index(syntax["OPEN_PAREN"]) + 1 : arg.index(syntax["CLOSE_PAREN"])
+            ]
             if str_var_name in variables:
                 arg = arg.replace(
-                    f"{syntax['STR']}{syntax["OPEN_PAREN"]}{str_var_name}{syntax["CLOSE_PAREN"]}", str(variables[str_var_name])
+                    f"{syntax['STR']}{syntax['OPEN_PAREN']}{str_var_name}{syntax['CLOSE_PAREN']}",
+                    str(variables[str_var_name]),
                 )
             else:
                 print(f"Unknown variable: {str_var_name}")

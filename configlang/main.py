@@ -99,11 +99,23 @@ class Interpreter:
                         line, self.syntax, self.functions, function_name, function_code
                     )
                 elif command == self.syntax["FUNC_CALL"] or line.startswith("CALL "):
-                    function_call = line.replace("CALL ", "") if line.startswith("CALL ") else line
-                    function_name = function_call.split(self.syntax['OPEN_PAREN'])[0].strip()  # Get the function name by splitting the line at the opening parenthesis and stripping any leading/trailing whitespace
-                    if self.syntax['OPEN_PAREN'] in function_call and self.syntax['CLOSE_PAREN'] in function_call:
-                        function_args_str = function_call[function_call.index(self.syntax['OPEN_PAREN'])+1:function_call.rindex(self.syntax['CLOSE_PAREN'])]  # Extract the string between parentheses
-                        function_args = [arg.strip() for arg in function_args_str.split(",")]  # Split the arguments by comma and strip spaces
+                    function_call = (
+                        line.replace("CALL ", "") if line.startswith("CALL ") else line
+                    )
+                    function_name = function_call.split(self.syntax["OPEN_PAREN"])[
+                        0
+                    ].strip()
+                    if (
+                        self.syntax["OPEN_PAREN"] in function_call
+                        and self.syntax["CLOSE_PAREN"] in function_call
+                    ):
+                        function_args_str = function_call[
+                            function_call.index(self.syntax["OPEN_PAREN"])
+                            + 1 : function_call.rindex(self.syntax["CLOSE_PAREN"])
+                        ]
+                        function_args = [
+                            arg.strip() for arg in function_args_str.split(",")
+                        ]
                     else:
                         function_args = []
                     if function_name in self.functions:
