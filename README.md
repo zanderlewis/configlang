@@ -1,4 +1,5 @@
 # ConfigLang
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b9562fadee5841a3afd7f6e32597ce6c)](https://app.codacy.com/gh/zanderlewis/configlang?utm_source=github.com&utm_medium=referral&utm_content=zanderlewis/configlang&utm_campaign=Badge_Grade)
 [![wakatime](https://wakatime.com/badge/github/zanderlewis/configlang.svg)](https://wakatime.com/badge/github/zanderlewis/configlang)
 
 ConfigLang is a highly customizable programming language that allows you to create your own syntax and change your language's file extension with no code required using a single config file.
